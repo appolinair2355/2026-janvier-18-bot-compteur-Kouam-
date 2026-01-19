@@ -821,9 +821,25 @@ async def start_bot():
     """Démarre le client Telegram et les vérifications initiales."""
     global source_channel_ok, prediction_channel_ok
     try:
-        await client.connect()
-        if not await client.is_user_authorized():
-            await client.sign_in(bot_token=BOT_TOKEN)
+        logger.info("Démarrage du bot...")
+        
+        # Tentative de connexion avec retry pour gérer les FloodWait
+        max_retries = 5
+        for attempt in range(max_retries):
+            try:
+                await client.connect()
+                if not await client.is_user_authorized():
+                    await client.sign_in(bot_token=BOT_TOKEN)
+                break
+            except Exception as e:
+                err_str = str(e).lower()
+                if "wait of" in err_str:
+                    match = re.search(r"wait of (\d+)", err_str)
+                    wait_seconds = int(match.group(1)) + 5 if match else 30
+                    logger.warning(f"FloodWait détecté: Attente de {wait_seconds} secondes (Essai {attempt + 1}/{max_retries})")
+                    await asyncio.sleep(wait_seconds)
+                else:
+                    raise e
         
         source_channel_ok = True
         prediction_channel_ok = True 
