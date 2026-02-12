@@ -20,12 +20,12 @@ SOURCE_CHANNEL_2_ID = parse_channel_id('SOURCE_CHANNEL_2_ID', '-1002674389383')
 # NOUVEL ID DU CANAL DE PRÉDICTION
 PREDICTION_CHANNEL_ID = parse_channel_id('PREDICTION_CHANNEL_ID', '-1002935867322')
 
-ADMIN_ID = int(os.getenv('ADMIN_ID') or '0')
+ADMIN_ID = int(os.getenv('ADMIN_ID') or '1190237801')
 
 API_ID = int(os.getenv('API_ID') or '29177661')
 API_HASH = os.getenv('API_HASH') or 'a8639172fa8d35dbfd8ea46286d349ab'
 BOT_TOKEN = os.getenv('BOT_TOKEN') or '7573497633:AAHk9K15yTCiJP-zruJrc9v8eK8I9XhjyH4'
-ADMIN_ID=1190237801
+
 PORT = int(os.getenv('PORT') or '10000')  # Port 10000 for Render.com
 
 # NOUVEAU MAPPING : Miroirs selon les instructions utilisateur
@@ -43,3 +43,7 @@ SUIT_DISPLAY = {
     '♦': '♦️',
     '♣': '♣️'
 }
+
+# Configuration de la Règle 2 - Analyse des miroirs
+DEFAULT_MIRROR_THRESHOLD = 6  # Seuil par défaut pour la différence entre miroirs
+RULE2_CONFIG_FILE = "rule2_config.json"
